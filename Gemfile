@@ -8,7 +8,8 @@ gem 'rails_12factor', group: :production
 gem 'unicorn'
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'mysql2'
+
 
 group :development, :test do
   gem 'rspec-rails'
@@ -45,6 +46,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem "paperclip", "~> 4.2"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

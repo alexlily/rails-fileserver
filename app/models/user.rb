@@ -2,7 +2,7 @@ require 'securerandom'
 
 class User < ActiveRecord::Base
   has_many :groups
-  has_many :devices
+  # has_many :devices
   after_initialize :init
 
   def init
