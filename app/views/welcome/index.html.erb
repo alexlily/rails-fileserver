@@ -1,4 +1,30 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<%= flash[:notice] %>
+
+<h2>File server! </h2>
+
+<h3>Upload File</h3>
+<%= form_for @fs_file, url: put_file_path do |f| %>
+  <%= f.label :file_id %>
+  <%= f.text_field :file_id %>
+  <br>
+  <%= f.label :site_id %>
+  <%= f.text_field :site_id %>
+  <br>
+  <%= f.label :file_data %>
+  <%= f.file_field :file_data %>
+  <br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<br>
+
+<h3>Download File</h3>
+<%= form_for @fs_file, url: get_file_path do |f| %>
+  <%= f.label :file_id %>
+  <%= f.text_field :file_id %>
+  <br>
+  <%= f.label :site_id %>
+  <%= f.text_field :site_id %>
+  <br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<br>

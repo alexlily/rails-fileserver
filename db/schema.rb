@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314090005) do
+ActiveRecord::Schema.define(version: 20150430212828) do
+
+  create_table "fs_files", force: true do |t|
+    t.string   "file_id"
+    t.string   "site_id"
+    t.string   "file_data_file_name"
+    t.string   "file_data_content_type"
+    t.integer  "file_data_file_size"
+    t.datetime "file_data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "filepath"
+  end
 
   create_table "users", force: true do |t|
     t.string   "client_key"

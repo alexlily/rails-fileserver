@@ -6,10 +6,7 @@ gem 'rails', '~> 4.0.3'
 
 gem 'rails_12factor', group: :production
 gem 'unicorn'
-
-# Use postgresql as the database for Active Record
 gem 'mysql2'
-
 
 group :development, :test do
   gem 'rspec-rails'
@@ -18,6 +15,8 @@ group :development, :test do
   gem 'simplecov'
   gem 'database_cleaner'
   gem 'cucumber-rails', :require => false
+  gem 'autotest-rails'
+  gem "factory_girl_rails"
 end
 
 # Use SCSS for stylesheets
