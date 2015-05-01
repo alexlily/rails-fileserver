@@ -1,4 +1,8 @@
 class FsFileController < ApplicationController
+	before_filter :authorize_user
+	def authorize_user
+		# check the client key here
+	end
 	def upload
 		newfile = FsFile.create(file_params)
 		if newfile.add_file(file_params)
@@ -9,15 +13,16 @@ class FsFileController < ApplicationController
 		redirect_to :root
 	end
 	def download
-		file = FsFile.where(:file_id => file_params[:file_id], :site_id => file_params[:site_id]).first
+		matches = FsFile.where(:file_id => file_params[:file_id], :site_id => file_params[:site_id])
 
-		if file
-		  puts file.filepath
-  		  filename = file.filepath.split('/')[-1]
+		if matches
+		  @file = matches.first
+		  puts @file.filepath
+  		  filename = @file.filepath.split('/')[-1]
 		  send_file(
-	        file.filepath,
+	        @file.filepath,
 	        filename: filename,
-	        type: file.file_data_content_type
+	        type: @file.file_data_content_type
 	   	  )
 	   	else
 	   		flash[:notice] = "That file does not exist"
