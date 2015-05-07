@@ -2,14 +2,22 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  describe "User creation" do
+  describe "AdminUser creation" do
     it "should generate a admin and client key" do
-      u = User.create()
-      u.admin_key.length.should >= 10
-      u.admin_key.should be_an_instance_of(String)
+      u = AdminUser.create
+      expect(u.admin_key.length).to be >= 10
+      expect(u.admin_key).to be_an_instance_of(String)
 
-      u.client_key.length.should >= 10
-      u.client_key.should be_an_instance_of(String)
+      expect(u.client_key.length).to be >= 10
+      expect(u.client_key).to be_an_instance_of(String)
+    end
+  end
+  describe "ClientUser creation" do
+    it "should generate a admin and client key" do
+      u = ClientUser.create()
+
+      expect(u.client_key.length).to be >= 10
+      expect(u.client_key).to be_an_instance_of(String)
     end
   end
 
