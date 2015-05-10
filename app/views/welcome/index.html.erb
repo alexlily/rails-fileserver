@@ -2,8 +2,10 @@
 
 <h2>File server! </h2>
 
+<%= link_to "Get client key", credentials_new_client_path %>
+
 <h3>Upload File</h3>
-<%= form_for @fs_file, url: put_file_path do |f| %>
+<%= form_for @fs_file, url: put_file_path (:client_key => sesion[:user].client_key) do |f| %>
   <%= f.label :file_id %>
   <%= f.text_field :file_id %>
   <br>

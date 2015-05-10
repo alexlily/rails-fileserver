@@ -1,15 +1,34 @@
 class FsFileController < ApplicationController
 
-	def validate_admin_key
-		puts "calling validate admin key"
+	def validate_admin_key(adminkey)
+		if (key == nil)
+			return false
+		end
+		admin = User.find_by_admin_key(key)
+		if not admin
+			return false
+		end
+		return true
 	end
-	def validate_client_key
-		puts "calling validate client key"
+	
+	def validate_client_key(key)
+		if (key == nil)
+			return false
+		end
+		user = User.find_by_client_key(key)
+		if not user
+			return false
+		end
+		return true
+	end
+
+	def errormessage
+		flash[:notice] = "This operation is not allowed"
+		redirect_to :root
 	end
 
 	def upload
-
-		validate_admin_key
+		errormessage and return unless validate_admin_key(params[:client_key])
 
 		newfile = FsFile.create(file_params)
 		if newfile.add_file(file_params)
@@ -20,9 +39,7 @@ class FsFileController < ApplicationController
 		redirect_to :root
 	end
 	def download
-
-		validate_client_key
-
+		errormessage and return unless validate_client_key(params[:client_key])
 		begin
 		matches = FsFile.where(:file_id => file_params[:file_id], :site_id => file_params[:site_id])
 
