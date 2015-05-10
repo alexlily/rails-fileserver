@@ -1,6 +1,6 @@
 class FsFileController < ApplicationController
 
-	def validate_admin_key(adminkey)
+	def validate_admin_key(key)
 		if (key == nil)
 			return false
 		end
@@ -28,7 +28,7 @@ class FsFileController < ApplicationController
 	end
 
 	def upload
-		errormessage and return unless validate_admin_key(params[:client_key])
+		errormessage and return unless validate_admin_key(params[:admin_key])
 
 		newfile = FsFile.create(file_params)
 		if newfile.add_file(file_params)

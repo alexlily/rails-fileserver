@@ -33,7 +33,42 @@ RSpec.describe FsFileController, type: :controller do
     	  expect(assigns(:file)).to eq(file)
     	end
     end
+  end
 
+  describe 'upload and download' do
+    before(:each) do
+      @admin = AdminUser.create!
+    end
+    it 'uploads a file with a key' do
+      expect {post :upload, "admin_key" => @admin.admin_key, "fs_file" => {"site_id" => "hi", "file_id" => "hello", "file_data" => Rack::Test::UploadedFile.new("hw0.pdf", "application/pdf")}
+        }.to change{FsFile.all.length}.by(1)
+    end
+    it 'does not upload a file without a key' do
+      expect {post :upload, "fs_file" => {"site_id" => "hi", "file_id" => "hello", "file_data" => Rack::Test::UploadedFile.new("hw0.pdf", "application/pdf")}
+        }.to change{FsFile.all.length}.by(0)
+    end
+    it 'uploads a file with a key' do
+      post :upload, "fs_file" => {"site_id" => "hi", "file_id" => "hello", "file_data" => Rack::Test::UploadedFile.new("hw0.pdf", "application/pdf")}
+      file = FsFile.where(:site_id => "hi", :file_id => "hello").first
+
+      post :download, "fs_file"=>{"file_id"=>"hello", "site_id"=>"hi"}
+      expect(assigns(:file)).to eq(file)
+    end
+    describe 'downlading a file' do
+      before(:each) do
+        post :upload, "client_key" => @admin.client_key, "fs_file" => {"site_id" => "hi", "file_id" => "hello", "file_data" => Rack::Test::UploadedFile.new("hw0.pdf", "application/pdf")}
+        @file = FsFile.where(:site_id => "hi", :file_id => "hello").first
+      end
+      it 'downloads a file' do
+        post :download, "client_key" => @admin.client_key, "fs_file"=>{"file_id"=>"hello", "site_id"=>"hi"}
+        expect(assigns(:file)).to eq(@file)
+      end
+      it 'does not upload a file without a key' do
+        post :download, "fs_file"=>{"file_id"=>"hello", "site_id"=>"hi"}
+        expect(assigns(:file)).to_not be
+      end
+    end
+    
   end
 
 end
