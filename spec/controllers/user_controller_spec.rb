@@ -35,7 +35,9 @@ RSpec.describe UserController, type: :controller do
 
   describe "UserController create client responses " do
     before(:each) do
-      put :create_client
+      admin = AdminUser.create!
+      @admin_key = admin.admin_key
+      put :create_client, :admin_key => @admin_key
       @result = JSON.parse(response.body)
     end
     it "returns success create_admin" do

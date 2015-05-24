@@ -16,4 +16,28 @@ class ApplicationController < ActionController::Base
        return render :text => "401", :status => :unauthorized
       end
   end
+
+  def validate_admin_key(key)
+    if (key == nil)
+      return false
+    end
+    admin = User.find_by_admin_key(key)
+    if not admin
+      return false
+    end
+    return true
+  end
+  
+  def validate_client_key(key)
+    if (key == nil)
+      return false
+    end
+    user = User.find_by_client_key(key)
+    if not user
+      return false
+    end
+    # destroy the key here, for one time use?
+    return true
+  end
+
 end

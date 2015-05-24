@@ -1,26 +1,5 @@
 class FsFileController < ApplicationController
 
-	def validate_admin_key(key)
-		if (key == nil)
-			return false
-		end
-		admin = User.find_by_admin_key(key)
-		if not admin
-			return false
-		end
-		return true
-	end
-	
-	def validate_client_key(key)
-		if (key == nil)
-			return false
-		end
-		user = User.find_by_client_key(key)
-		if not user
-			return false
-		end
-		return true
-	end
 
 	def errormessage
 		flash[:notice] = "This operation is not allowed"
