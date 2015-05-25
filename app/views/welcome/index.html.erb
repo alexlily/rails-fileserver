@@ -5,7 +5,7 @@
 <%= link_to "Get client key", credentials_new_client_path %>
 
 <h3>Upload File</h3>
-<%= form_for @fs_file, url: put_file_path (:client_key => sesion[:user].client_key) do |f| %>
+<%= form_for @fs_file, url: put_file_path(:admin_key =>"d1e4c08a01b7a19084fec142cb14c9b5fc5f12b1") do |f| %>
   <%= f.label :file_id %>
   <%= f.text_field :file_id %>
   <br>
@@ -20,7 +20,7 @@
 <br>
 
 <h3>Download File</h3>
-<%= form_for @fs_file, url: get_file_path do |f| %>
+<%= form_for @fs_file, url: get_download_link_path(:admin_key =>"d1e4c08a01b7a19084fec142cb14c9b5fc5f12b1") do |f| %>
   <%= f.label :file_id %>
   <%= f.text_field :file_id %>
   <br>

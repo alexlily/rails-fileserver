@@ -30,14 +30,24 @@ class ApplicationController < ActionController::Base
   
   def validate_client_key(key)
     if (key == nil)
+      puts "nil key"
       return false
     end
+    puts "using "
+    puts key
     user = User.find_by_client_key(key)
     if not user
+      puts "didn't find user"
       return false
     end
+    puts "found it!"
     # destroy the key here, for one time use?
     return true
   end
 
+  def make_new_client(admin_key)
+    return false unless validate_admin_key(admin_key)
+    u = ClientUser.create!
+    return u.client_key
+  end
 end
